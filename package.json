@@ -1,0 +1,30 @@
+{
+  "name": "lab-clock-in",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "description": "",
+  "scripts": {
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "commitizen": "^4.2.4",
+    "conventional-changelog-cli": "^2.1.1",
+    "eslint": "^8.2.0",
+    "eslint-config-alloy": "^4.4.0",
+    "husky": "^7.0.0",
+    "lint-staged": "^11.2.6",
+    "miniprogram-api-typings": "^2.8.3-1",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4"
+  }
+}

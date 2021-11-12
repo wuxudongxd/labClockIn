@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# git commit时使用 commitizen 规范 msg 输入
+exec < /dev/tty && npx cz --hook || true
