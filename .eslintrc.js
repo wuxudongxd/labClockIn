@@ -1,5 +1,4 @@
 module.exports = {
-  extends: ["alloy", "alloy/typescript"],
   env: {
     es6: true,
     browser: true,
