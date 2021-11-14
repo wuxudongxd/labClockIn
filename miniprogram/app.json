@@ -1,5 +1,11 @@
 {
-  "pages": ["pages/index/index"],
+  "pages": [
+    "pages/auth/index",
+    "pages/index/index",
+    "pages/leave/index",
+    "pages/analysis/index",
+    "pages/audit/index"
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -7,5 +13,30 @@
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#13227a",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/clock-in.png",
+        "selectedIconPath": "image/clock-in-active.png",
+        "text": "签到"
+      },
+      {
+        "pagePath": "pages/leave/index",
+        "iconPath": "image/ask-for-leave.png",
+        "selectedIconPath": "image/ask-for-leave-active.png",
+        "text": "请假"
+      },
+      {
+        "pagePath": "pages/analysis/index",
+        "iconPath": "image/analysis.png",
+        "selectedIconPath": "image/analysis-active.png",
+        "text": "分析"
+      }
+    ]
+  }
 }
