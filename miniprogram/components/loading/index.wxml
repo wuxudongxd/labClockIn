@@ -1,0 +1,9 @@
+<!-- <view class="loading"> -->
+<view class="loading-bar">
+  <text></text>
+  <text></text>
+  <text></text>
+  <text></text>
+  <text></text>
+</view>
+<!-- </view> -->

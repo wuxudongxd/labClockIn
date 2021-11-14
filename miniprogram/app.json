@@ -1,10 +1,11 @@
 {
   "pages": [
-    "pages/auth/index",
+    "pages/guard/index",
+    "pages/guard/unaudit/index",
+    "pages/guard/unauth/index",
     "pages/index/index",
     "pages/leave/index",
-    "pages/analysis/index",
-    "pages/audit/index"
+    "pages/analysis/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

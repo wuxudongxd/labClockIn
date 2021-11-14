@@ -1,0 +1,4 @@
+<view>
+  <loading wx:if="{{isLoading}}" class="loading"></loading>
+  <text class="auth-text">用户信息认证中...</text>
+</view>
