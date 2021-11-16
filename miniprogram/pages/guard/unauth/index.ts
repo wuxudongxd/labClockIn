@@ -1,18 +1,19 @@
-const db = wx.cloud.database();
-
 // 新增用户
 const addUser = (userInfo: WechatMiniprogram.UserInfo) => {
   const { avatarUrl, language, nickName } = userInfo;
   try {
-    const res = db.collection("user").add({
-      data: {
-        avatarUrl,
-        language,
-        nickName,
-        isAudit: false,
-        isDel: false,
-      },
-    });
+    const res = wx.cloud
+      .database()
+      .collection("user")
+      .add({
+        data: {
+          avatarUrl,
+          language,
+          nickName,
+          isAudit: false,
+          isDel: false,
+        },
+      });
     console.log(res);
     wx.switchTab({
       url: "/pages/index/index",

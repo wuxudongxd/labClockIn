@@ -1,1 +1,4 @@
-<view> </view>
+<view>
+  <button type="primary" bind:tap="onTap">签到</button>
+  <text> 纬度：{{latitude}} 经度：{{longitude}} </text>
+</view>

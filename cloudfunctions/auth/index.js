@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
     for (const user of result.data) {
       AuthStatus = "unAudit";
       if (user.isAudit) {
-        AuthStatus = "Audit";
+        AuthStatus = "Auth";
         break;
       }
     }
