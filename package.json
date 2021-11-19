@@ -7,7 +7,8 @@
   "description": "",
   "scripts": {
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "format": "prettier --write ."
   },
   "config": {
     "commitizen": {

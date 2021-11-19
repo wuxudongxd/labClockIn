@@ -1,6 +1,9 @@
+import { addUser } from "../../utils/cloudbase";
+
 Page({
   data: {
     isLoading: true,
+    userStatus: "",
   },
   onLoad() {
     this.checkUserStatus();
@@ -9,22 +12,15 @@ Page({
   async checkUserStatus() {
     try {
       const res = await wx.cloud.callFunction({ name: "auth" });
-      console.log("云函数返回的数据", res);
-      this.setData({
-        isLoading: false,
-      });
+      let _userStatus = "";
       switch (res.result) {
         case "unAuth":
           console.log("用户未认证");
-          wx.redirectTo({
-            url: "/pages/guard/unauth/index",
-          });
+          _userStatus = "unAuth";
           break;
         case "unAudit":
           console.log("用户未审核通过");
-          wx.redirectTo({
-            url: "/pages/guard/unaudit/index",
-          });
+          _userStatus = "unAudit";
           break;
         case "Auth":
           console.log("用户审核通过");
@@ -36,8 +32,27 @@ Page({
           console.log("出现未知错误");
           break;
       }
+      this.setData({
+        isLoading: false,
+        userStatus: _userStatus,
+      });
     } catch (error) {
       console.error("云函数调用失败：", error);
+    }
+  },
+  // 添加待校验用户
+  async addUnAuditUser() {
+    try {
+      let res = await wx.getUserProfile({
+        desc: "获取信息用于验证",
+      });
+      const user = await addUser(res.userInfo);
+      console.log("unaudit", user);
+      this.setData({
+        userStatus: "unAudit",
+      });
+    } catch (error) {
+      console.error(error);
     }
   },
 });

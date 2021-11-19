@@ -1,1 +1,0 @@
-<button bind:tap="getUserProfile" type="primary">发送加入签到群组请求</button>

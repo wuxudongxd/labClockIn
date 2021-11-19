@@ -1,7 +1,14 @@
+import { GetDistance } from "../../utils/index";
+import { getLabInfo } from "../../utils/cloudbase";
+
 Page({
   data: {
     latitude: 0,
     longitude: 0,
+    labName: "",
+    labLatitude: 0,
+    labLongitude: 0,
+    distribute: 0,
   },
   async onShow() {
     try {
@@ -10,6 +17,16 @@ Page({
         await wx.startLocationUpdate();
         wx.onLocationChange(this._locationChangeFn);
       }
+      const res = await getLabInfo();
+      const labName = res.data[0].name;
+      console.log("lab", res.data[0]);
+
+      const { latitude, longitude } = res.data[0].locations[0];
+      this.setData({
+        labName,
+        labLatitude: latitude,
+        labLongitude: longitude,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -37,9 +54,19 @@ Page({
     }
   },
   _locationChangeFn(res: any) {
+    let distance = 0;
+    if (this.data.labLatitude !== 0 && this.data.labLongitude !== 0) {
+      distance = GetDistance(
+        this.data.labLatitude,
+        this.data.labLongitude,
+        res.latitude,
+        res.longitude
+      );
+    }
     this.setData({
       latitude: res.latitude,
       longitude: res.longitude,
+      distance,
     });
   },
 });

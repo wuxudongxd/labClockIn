@@ -1,8 +1,6 @@
 {
   "pages": [
     "pages/guard/index",
-    "pages/guard/unaudit/index",
-    "pages/guard/unauth/index",
     "pages/index/index",
     "pages/leave/index",
     "pages/analysis/index"
