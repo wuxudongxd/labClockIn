@@ -47,10 +47,11 @@ Page({
         desc: "获取信息用于验证",
       });
       const user = await addUser(res.userInfo);
-      console.log("unaudit", user);
-      this.setData({
-        userStatus: "unAudit",
-      });
+      if (user.errMsg === "collection.add:ok") {
+        this.setData({
+          userStatus: "unAudit",
+        });
+      }
     } catch (error) {
       console.error(error);
     }

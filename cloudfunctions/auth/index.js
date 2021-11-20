@@ -31,7 +31,6 @@ exports.main = async (event, context) => {
         break;
       }
     }
-    console.log(openid, result.data[0], AuthStatus);
   } catch (error) {
     console.error(error);
   }

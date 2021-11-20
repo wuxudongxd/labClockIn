@@ -1,5 +1,7 @@
 <view>
-  <button type="primary" bind:tap="onTap">签到</button>
+  <button disabled="{{disableButton}}" type="primary" bind:tap="onTap">
+    获取当前位置/签到
+  </button>
   <text> 纬度：{{latitude}} 经度：{{longitude}} </text>
   <text>
     实验室名称：{{labName}} 纬度：{{labLatitude}} 经度：{{labLongitude}}

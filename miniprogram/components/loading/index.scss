@@ -41,13 +41,20 @@
     0%,
     100% {
       height: 40rpx;
-      background: lightgreen;
+      background: #e8ebfe;
+    }
+    25%,
+    75% {
+      height: 55rpx;
+      margin-top: -7.5rpx;
+      margin-bottom: -7.5rpx;
+      background: #bbc1fe;
     }
     50% {
       height: 70rpx;
       margin-top: -15rpx;
       margin-bottom: -15rpx;
-      background: lightblue;
+      background: #8e97fd;
     }
   }
 }

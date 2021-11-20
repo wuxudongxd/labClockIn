@@ -8,27 +8,24 @@ Page({
     labName: "",
     labLatitude: 0,
     labLongitude: 0,
-    distribute: 0,
+    distance: 0,
+    disableButton: true,
+  },
+  async onLoad() {
+    const res = await getLabInfo();
+    const labName = res.data[0].name;
+    const { latitude, longitude } = res.data[0].locations[0];
+    this.setData({
+      labName,
+      labLatitude: latitude,
+      labLongitude: longitude,
+    });
   },
   async onShow() {
-    try {
-      const setting = await wx.getSetting();
-      if (setting.authSetting["scope.userLocation"]) {
-        await wx.startLocationUpdate();
-        wx.onLocationChange(this._locationChangeFn);
-      }
-      const res = await getLabInfo();
-      const labName = res.data[0].name;
-      console.log("lab", res.data[0]);
-
-      const { latitude, longitude } = res.data[0].locations[0];
-      this.setData({
-        labName,
-        labLatitude: latitude,
-        labLongitude: longitude,
-      });
-    } catch (error) {
-      console.error(error);
+    const setting = await wx.getSetting();
+    if (setting.authSetting["scope.userLocation"]) {
+      await wx.startLocationUpdate();
+      wx.onLocationChange(this._locationChangeFn);
     }
   },
   async onHide() {
@@ -45,7 +42,6 @@ Page({
         await wx.startLocationUpdate();
         wx.onLocationChange(this._locationChangeFn);
       }
-      console.log(this.data.latitude, this.data.longitude);
       wx.cloud.database().collection("clock_in_record").add({
         data: {},
       });
