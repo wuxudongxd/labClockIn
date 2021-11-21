@@ -1,0 +1,3 @@
+<button type="primary" class="button">
+  <slot></slot>
+</button>

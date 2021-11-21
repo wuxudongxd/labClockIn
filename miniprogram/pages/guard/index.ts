@@ -13,25 +13,26 @@ Page({
     try {
       const res = await wx.cloud.callFunction({ name: "auth" });
       let _userStatus = "";
-      switch (res.result) {
-        case "unAuth":
-          console.log("用户未认证");
-          _userStatus = "unAuth";
-          break;
-        case "unAudit":
-          console.log("用户未审核通过");
-          _userStatus = "unAudit";
-          break;
-        case "Auth":
-          console.log("用户审核通过");
-          wx.switchTab({
-            url: "/pages/index/index",
-          });
-          break;
-        default:
-          console.log("出现未知错误");
-          break;
-      }
+      _userStatus = "unAuth";
+      // switch (res.result) {
+      //   case "unAuth":
+      //     console.log("用户未认证");
+      //     _userStatus = "unAuth";
+      //     break;
+      //   case "unAudit":
+      //     console.log("用户未审核通过");
+      //     _userStatus = "unAudit";
+      //     break;
+      //   case "Auth":
+      //     console.log("用户审核通过");
+      //     wx.switchTab({
+      //       url: "/pages/index/index",
+      //     });
+      //     break;
+      //   default:
+      //     console.log("出现未知错误");
+      //     break;
+      // }
       this.setData({
         isLoading: false,
         userStatus: _userStatus,

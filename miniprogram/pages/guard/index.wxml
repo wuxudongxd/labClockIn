@@ -1,12 +1,10 @@
 <view>
   <block wx:if="{{isLoading}}">
-    <loading wx:if="{{isLoading}}" class="loading"></loading>
+    <custom-loading wx:if="{{isLoading}}" class="loading"></custom-loading>
     <text class="auth-text">用户信息认证中...</text>
   </block>
   <block wx:if="{{userStatus === 'unAuth'}}">
-    <button bind:tap="addUnAuditUser" type="primary">
-      发送加入签到群组请求
-    </button>
+    <custom-button>1111</custom-button>
   </block>
   <block wx:if="{{userStatus === 'unAudit'}}">
     <view class="message">您的认证请求已发送，等待管理员审核</view>

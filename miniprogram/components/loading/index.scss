@@ -1,26 +1,16 @@
-// .loading {
-//   background: #fff;
-//   height: 100%;
-//   width: 100%;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   z-index: 99;
-// }
-
 .loading-bar {
-  width: 80rpx;
-  height: 40rpx;
+  width: 115rpx;
+  height: 80rpx;
   margin: 0 auto;
-  margin-top: 100rpx;
+  margin-top: 180rpx;
 
   & text {
     display: inline-block;
     width: 8rpx;
     height: 100%;
-    margin-right: 8rpx;
+    margin-right: 15rpx;
     border-radius: 4rpx;
-    background: lightgreen;
+    background: #6ba4a4;
     animation: load 1s ease infinite;
 
     &:nth-child(2) {
@@ -40,21 +30,14 @@
   @keyframes load {
     0%,
     100% {
-      height: 40rpx;
-      background: #e8ebfe;
-    }
-    25%,
-    75% {
-      height: 55rpx;
-      margin-top: -7.5rpx;
-      margin-bottom: -7.5rpx;
-      background: #bbc1fe;
+      height: 80rpx;
+      background: #ecf7f3;
     }
     50% {
-      height: 70rpx;
-      margin-top: -15rpx;
-      margin-bottom: -15rpx;
-      background: #8e97fd;
+      height: 150rpx;
+      margin-top: -30rpx;
+      margin-bottom: -30rpx;
+      background: #6ba4a4;
     }
   }
 }

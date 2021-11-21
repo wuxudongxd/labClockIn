@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "loading": "../../components/loading/index"
+    "custom-loading": "../../components/loading/index",
+    "custom-button": "../../components/button/index"
   }
 }
