@@ -19,11 +19,11 @@
     "@vant/weapp": "^1.9.2"
   },
   "devDependencies": {
+    "@types/wechat-miniprogram": "^3.4.0",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
     "husky": "^7.0.0",
     "lint-staged": "^11.2.6",
-    "miniprogram-api-typings": "^2.8.3-1",
     "prettier": "^2.4.1"
   }
 }

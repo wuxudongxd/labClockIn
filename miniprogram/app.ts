@@ -12,7 +12,7 @@ const initCloud = () => {
   }
 };
 
-App<IAppOption>({
+App({
   globalData: {},
   onLaunch() {
     initCloud();

@@ -18,7 +18,7 @@
     "strictPropertyInitialization": true,
     "lib": ["ES2020"],
     "baseUrl": ".",
-    "types": ["miniprogram-api-typings"],
+    "types": ["@types/wechat-miniprogram"],
     "paths": {
       "@vant/weapp/*": ["./node_modules/@vant/weapp/dist/*"]
     },
