@@ -1,5 +1,5 @@
 import { GetDistance } from "../../utils/index";
-import { getLabInfo } from "../../utils/cloudbase";
+import { getLabs } from "../../utils/cloudbase";
 
 Page({
   data: {
@@ -12,7 +12,7 @@ Page({
     disableButton: true,
   },
   async onLoad() {
-    const res = await getLabInfo();
+    const res = await getLabs();
     const labName = res.data[0].name;
     const { latitude, longitude } = res.data[0].locations[0];
     this.setData({

@@ -1,13 +1,17 @@
 // 新增用户
-export const addUser = async (userInfo: WechatMiniprogram.UserInfo) => {
-  const { avatarUrl, language, nickName } = userInfo;
+import { userProps } from "../types/index";
+
+export const addUser = async (userInfo: userProps) => {
+  const { avatarUrl, nickName, lab, name, studentID } = userInfo;
   const res = await wx.cloud
     .database()
     .collection("user")
     .add({
       data: {
+        lab,
+        name,
+        studentID,
         avatarUrl,
-        language,
         nickName,
         isAudit: false,
         isDel: false,
@@ -18,8 +22,7 @@ export const addUser = async (userInfo: WechatMiniprogram.UserInfo) => {
   return res;
 };
 
-export const getLabInfo = async () => {
+export const getLabs = async () => {
   const res = await wx.cloud.database().collection("lab").get();
-  console.log("lab info", res);
   return res;
 };

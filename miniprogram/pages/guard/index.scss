@@ -5,3 +5,85 @@
   margin-top: 135rpx;
   color: #3d3d3d;
 }
+
+.warp {
+  --formWidth: 80vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .form-wrap {
+    width: var(--formWidth);
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+
+      .user-info {
+        width: var(--formWidth);
+        height: 120rpx;
+        margin-bottom: 50rpx;
+        padding: 0 40rpx;
+        display: flex;
+        align-items: center;
+        .avatar {
+          width: 100rpx;
+          height: 100rpx;
+          border-radius: 50rpx;
+        }
+        .nickname {
+          font-size: 40rpx;
+          color: #64687a;
+          margin-left: 20rpx;
+        }
+      }
+
+      .picker,
+      .input {
+        width: var(--formWidth);
+        height: 120rpx;
+        font-size: 30rpx;
+        padding: 0 40rpx;
+        margin-bottom: 50rpx;
+        background: #f2f3f7;
+        border-radius: 30rpx;
+      }
+      .picker {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--input-text-color);
+      }
+      .picker::after {
+        content: "";
+        width: 10rpx;
+        height: 10rpx;
+        border: 5rpx solid var(--input-text-color);
+        border-color: transparent var(--input-text-color)
+          var(--input-text-color) transparent;
+        border-radius: 5rpx;
+        transform: rotate(45deg);
+        margin-bottom: 10rpx;
+      }
+      .active {
+        color: #000;
+      }
+
+      .input-placeholder {
+        color: var(--input-text-color);
+      }
+      .input-focus {
+        background-color: cadetblue;
+      }
+    }
+
+    .btn {
+      width: var(--formWidth);
+    }
+  }
+}

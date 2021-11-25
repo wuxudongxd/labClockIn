@@ -1,11 +1,29 @@
 import { addUser } from "../../utils/cloudbase";
+import { getLabs } from "../../utils/cloudbase";
+import { lab, userProps } from "../../types/index";
+
+interface form {
+  labIndex: number;
+  name: string;
+  studentID: string;
+}
 
 Page({
+  options: {
+    pureDataPattern: /^_/, // 指定所有 _ 开头的数据字段为纯数据字段
+  },
   data: {
     isLoading: true,
+    hasUserInfo: false,
     userStatus: "",
+    index: null,
+    picker: ["XX实验室", "XL实验室", "2XL实验室"],
+    _labs: [] as lab[],
+    labsName: [] as string[],
+    nickName: "",
+    avatarUrl: "",
   },
-  onLoad() {
+  async onLoad() {
     this.checkUserStatus();
   },
   // 检查用户云数据库状态
@@ -14,25 +32,26 @@ Page({
       const res = await wx.cloud.callFunction({ name: "auth" });
       let _userStatus = "";
       _userStatus = "unAuth";
-      // switch (res.result) {
-      //   case "unAuth":
-      //     console.log("用户未认证");
-      //     _userStatus = "unAuth";
-      //     break;
-      //   case "unAudit":
-      //     console.log("用户未审核通过");
-      //     _userStatus = "unAudit";
-      //     break;
-      //   case "Auth":
-      //     console.log("用户审核通过");
-      //     wx.switchTab({
-      //       url: "/pages/index/index",
-      //     });
-      //     break;
-      //   default:
-      //     console.log("出现未知错误");
-      //     break;
-      // }
+      switch (res.result) {
+        case "unAuth":
+          console.log("用户未认证");
+          _userStatus = "unAuth";
+          this.getLabsInfo();
+          break;
+        case "unAudit":
+          console.log("用户未审核通过");
+          _userStatus = "unAudit";
+          break;
+        case "Auth":
+          console.log("用户审核通过");
+          wx.switchTab({
+            url: "/pages/index/index",
+          });
+          break;
+        default:
+          console.log("出现未知错误");
+          break;
+      }
       this.setData({
         isLoading: false,
         userStatus: _userStatus,
@@ -42,12 +61,24 @@ Page({
     }
   },
   // 添加待校验用户
-  async addUnAuditUser() {
+  async onSubmit(event: WechatMiniprogram.FormSubmit) {
     try {
-      let res = await wx.getUserProfile({
-        desc: "获取信息用于验证",
-      });
-      const user = await addUser(res.userInfo);
+      const formData = event.detail.value as form;
+      const selectedLabIndex = this.data.labsName[formData.labIndex];
+      const selectedLab = this.data._labs.find(
+        (item) => item.name === selectedLabIndex
+      ) as lab;
+
+      const userProps: userProps = {
+        nickName: this.data.nickName,
+        avatarUrl: this.data.avatarUrl,
+        name: formData.name,
+        studentID: formData.studentID,
+        lab: { _id: selectedLab?._id, name: selectedLab?.name },
+      };
+      console.log(userProps);
+
+      const user = await addUser(userProps);
       if (user.errMsg === "collection.add:ok") {
         this.setData({
           userStatus: "unAudit",
@@ -56,5 +87,34 @@ Page({
     } catch (error) {
       console.error(error);
     }
+  },
+  async getLabsInfo() {
+    const res = await getLabs();
+    const labs = res.data as lab[];
+    const labsName = labs.map((item: lab) => item.name);
+    console.log(labsName);
+
+    this.setData({
+      _labs: labs,
+      labsName,
+    });
+  },
+  PickerChange(e: any) {
+    this.setData({
+      index: e.detail.value,
+    });
+  },
+  async getUserProfile() {
+    try {
+      const res = await wx.getUserProfile({
+        desc: "获取信息用于验证",
+      });
+      console.log(res);
+      this.setData({
+        nickName: res.userInfo.nickName,
+        avatarUrl: res.userInfo.avatarUrl,
+        hasUserInfo: true,
+      });
+    } catch (error) {}
   },
 });

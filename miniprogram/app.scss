@@ -1,0 +1,40 @@
+/* ==================
+        初始化
+ ==================== */
+page {
+  --button-color: #d5e5e2;
+  --button-text-color: #5b7d76;
+  --input-text-color: #a1a4b2;
+
+  font-size: 28rpx;
+}
+
+view,
+scroll-view,
+swiper,
+button,
+input,
+textarea,
+label,
+navigator,
+image {
+  box-sizing: border-box;
+}
+
+button {
+  font-size: 40rpx;
+  font-weight: 700;
+  border-radius: 30rpx;
+  color: var(--button-text-color);
+  background-color: var(--button-color);
+  border: 0rpx;
+  box-shadow: 0rpx 4rpx 4rpx 0rpx rgba(213, 229, 226, 0.1);
+  &::after {
+    border: 0;
+  }
+}
+
+.button-hover {
+  color: var(--button-text-color);
+  background-color: #e4eeec;
+}

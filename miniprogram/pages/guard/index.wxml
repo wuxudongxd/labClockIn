@@ -4,7 +4,42 @@
     <text class="auth-text">用户信息认证中...</text>
   </block>
   <block wx:if="{{userStatus === 'unAuth'}}">
-    <custom-button>1111</custom-button>
+    <view class="warp">
+      <form bindsubmit="onSubmit">
+        <view class="form-wrap">
+          <view class="input-box">
+            <view wx:if="{{hasUserInfo}}" class="user-info">
+              <image class="avatar" src="{{avatarUrl}}" mode="cover"></image>
+              <text class="nickname">{{nickName}}</text>
+            </view>
+            <picker
+              name="labIndex"
+              bindchange="PickerChange"
+              value="{{index}}"
+              range="{{labsName}}">
+              <view class="picker {{index ? 'active':''}}">
+                {{index?picker[index]:'您所在的实验室'}}
+              </view>
+            </picker>
+            <input name="name" class="input" placeholder="请输入您的姓名" />
+            <input
+              name="studentID"
+              class="input"
+              type="number"
+              placeholder="请输入您的学号" />
+          </view>
+          <block>
+            <button
+              wx:if="{{!hasUserInfo}}"
+              bindtap="getUserProfile"
+              class="btn">
+              获取头像昵称
+            </button>
+            <button wx:else class="btn" form-type="submit">加入实验室</button>
+          </block>
+        </view>
+      </form>
+    </view>
   </block>
   <block wx:if="{{userStatus === 'unAudit'}}">
     <view class="message">您的认证请求已发送，等待管理员审核</view>
