@@ -3,10 +3,10 @@
     <custom-loading wx:if="{{isLoading}}" class="loading"></custom-loading>
     <text class="auth-text">用户信息认证中...</text>
   </block>
-  <block wx:if="{{userStatus === 'unAuth'}}">
-    <view class="warp">
+  <view class="wrap">
+    <block wx:if="{{userStatus === 'unAuth'}}">
       <form bindsubmit="onSubmit">
-        <view class="form-wrap">
+        <view class="content">
           <view class="input-box">
             <view wx:if="{{hasUserInfo}}" class="user-info">
               <image class="avatar" src="{{avatarUrl}}" mode="cover"></image>
@@ -39,9 +39,15 @@
           </block>
         </view>
       </form>
-    </view>
-  </block>
-  <block wx:if="{{userStatus === 'unAudit'}}">
-    <view class="message">您的认证请求已发送，等待管理员审核</view>
-  </block>
+    </block>
+
+    <block wx:if="{{userStatus === 'unAudit'}}">
+      <view class="content">
+        <text class="message"
+          >您的认证请求已发送，{{ '\n' }}请等待管理员审核</text
+        >
+        <button class="btn">返回</button>
+      </view>
+    </block>
+  </view>
 </view>

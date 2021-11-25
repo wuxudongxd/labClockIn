@@ -6,15 +6,17 @@
   color: #3d3d3d;
 }
 
-.warp {
-  --formWidth: 80vw;
+.wrap {
+  --content-width: 80vw;
+  --content-height: 80vh;
+  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  .form-wrap {
-    width: var(--formWidth);
-    height: 80vh;
+  .content {
+    width: var(--content-width);
+    height: var(--content-height);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +27,7 @@
       flex-direction: column;
 
       .user-info {
-        width: var(--formWidth);
+        width: var(--content-width);
         height: 120rpx;
         margin-bottom: 50rpx;
         padding: 0 40rpx;
@@ -45,7 +47,7 @@
 
       .picker,
       .input {
-        width: var(--formWidth);
+        width: var(--content-width);
         height: 120rpx;
         font-size: 30rpx;
         padding: 0 40rpx;
@@ -82,8 +84,14 @@
       }
     }
 
+    .message {
+      color: #585857;
+      font-size: 40rpx;
+      line-height: 60rpx;
+    }
+
     .btn {
-      width: var(--formWidth);
+      width: var(--content-width);
     }
   }
 }
