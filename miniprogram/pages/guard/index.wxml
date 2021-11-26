@@ -1,5 +1,5 @@
 <view>
-  <block wx:if="{{isLoading}}">
+  <block wx:if="{{!userStatus}}">
     <custom-loading wx:if="{{isLoading}}" class="loading"></custom-loading>
     <text class="auth-text">用户信息认证中...</text>
   </block>
@@ -40,7 +40,6 @@
         </view>
       </form>
     </block>
-
     <block wx:if="{{userStatus === 'unAudit'}}">
       <view class="content">
         <text class="message"

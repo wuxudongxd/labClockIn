@@ -17,7 +17,6 @@ Page({
     hasUserInfo: false,
     userStatus: "",
     index: null,
-    picker: ["XX实验室", "XL实验室", "2XL实验室"],
     _labs: [] as lab[],
     labsName: [] as string[],
     nickName: "",
@@ -30,21 +29,23 @@ Page({
   async checkUserStatus() {
     try {
       const res = await wx.cloud.callFunction({ name: "auth" });
-      let _userStatus = "";
-      _userStatus = "unAuth";
       switch (res.result) {
         case "unAuth":
           console.log("用户未认证");
-          _userStatus = "unAuth";
+          this.setData({
+            userStatus: "unAuth",
+          });
           this.getLabsInfo();
           break;
         case "unAudit":
           console.log("用户未审核通过");
-          _userStatus = "unAudit";
+          this.setData({
+            userStatus: "unAudit",
+          });
           break;
         case "Auth":
           console.log("用户审核通过");
-          wx.switchTab({
+          wx.redirectTo({
             url: "/pages/index/index",
           });
           break;
@@ -52,10 +53,6 @@ Page({
           console.log("出现未知错误");
           break;
       }
-      this.setData({
-        isLoading: false,
-        userStatus: _userStatus,
-      });
     } catch (error) {
       console.error("云函数调用失败：", error);
     }
