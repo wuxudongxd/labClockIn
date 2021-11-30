@@ -18,7 +18,7 @@
               value="{{index}}"
               range="{{labsName}}">
               <view class="picker {{index ? 'active':''}}">
-                {{index?picker[index]:'您所在的实验室'}}
+                {{index?labsName[index]:'您所在的实验室'}}
               </view>
             </picker>
             <input name="name" class="input" placeholder="请输入您的姓名" />
