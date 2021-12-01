@@ -60,8 +60,8 @@ Page({
       );
     }
     this.setData({
-      latitude: res.latitude,
-      longitude: res.longitude,
+      latitude: res.latitude.toFixed(9),
+      longitude: res.longitude.toFixed(9),
       distance,
     });
   },
