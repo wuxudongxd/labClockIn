@@ -1,68 +1,47 @@
-import { GetDistance } from "../../utils/index";
-import { getLabs } from "../../utils/cloudbase";
-
+// pages/index/index.ts
 Page({
-  data: {
-    latitude: 0,
-    longitude: 0,
-    labName: "",
-    labLatitude: 0,
-    labLongitude: 0,
-    distance: 0,
-    disableButton: true,
-  },
-  async onLoad() {
-    const res = await getLabs();
-    const labName = res.data[0].name;
-    const { latitude, longitude } = res.data[0].locations[0];
-    this.setData({
-      labName,
-      labLatitude: latitude,
-      labLongitude: longitude,
-    });
-  },
-  async onShow() {
-    const setting = await wx.getSetting();
-    if (setting.authSetting["scope.userLocation"]) {
-      await wx.startLocationUpdate();
-      wx.onLocationChange(this._locationChangeFn);
-    }
-  },
-  async onHide() {
-    const setting = await wx.getSetting();
-    if (setting.authSetting["scope.userLocation"]) {
-      wx.offLocationChange(this._locationChangeFn);
-    }
-  },
-  async onTap() {
-    try {
-      const setting = await wx.getSetting();
-      if (!setting.authSetting["scope.userLocation"]) {
-        await wx.authorize({ scope: "scope.userLocation" });
-        await wx.startLocationUpdate();
-        wx.onLocationChange(this._locationChangeFn);
-      }
-      wx.cloud.database().collection("clock_in_record").add({
-        data: {},
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  _locationChangeFn(res: any) {
-    let distance = 0;
-    if (this.data.labLatitude !== 0 && this.data.labLongitude !== 0) {
-      distance = GetDistance(
-        this.data.labLatitude,
-        this.data.labLongitude,
-        res.latitude,
-        res.longitude
-      );
-    }
-    this.setData({
-      latitude: res.latitude,
-      longitude: res.longitude,
-      distance,
-    });
-  },
+  /**
+   * 页面的初始数据
+   */
+  data: {},
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad() {},
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {},
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {},
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {},
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {},
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {},
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {},
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {},
 });

@@ -1,10 +1,23 @@
-<view>
-  <button disabled="{{disableButton}}" type="primary" bind:tap="onTap">
-    获取当前位置/签到
-  </button>
-  <text> 纬度：{{latitude}} 经度：{{longitude}} </text>
-  <text>
-    实验室名称：{{labName}} 纬度：{{labLatitude}} 经度：{{labLongitude}}
-  </text>
-  <text> 距离为：{{distance*1000}}米 </text>
+<image class="background-img" src="../../image/background.png"></image>
+
+<view class="wrap">
+  <text class="greet">早上好！某某某</text>
+  <text class="hint">请选择您的待办事项：</text>
+
+  <view class="card">
+    <view class="clockin">
+      <image src="../../image/card/clockin.png" />
+      <text>每日打卡</text>
+    </view>
+
+    <view class="leave">
+      <image src="../../image/card/leave.png" />
+      <text>请假申请</text>
+    </view>
+
+    <view class="analysis">
+      <image src="../../image/card/analysis.png" />
+      <text>数据分析</text>
+    </view>
+  </view>
 </view>
