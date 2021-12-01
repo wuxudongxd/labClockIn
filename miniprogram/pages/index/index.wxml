@@ -5,17 +5,17 @@
   <text class="hint">请选择您的待办事项：</text>
 
   <view class="card">
-    <view class="clockin">
+    <view class="clockin" bind:tap="TapClockIn">
       <image src="../../image/card/clockin.png" />
       <text>每日打卡</text>
     </view>
 
-    <view class="leave">
+    <view class="leave" bind:tap="TapLeave">
       <image src="../../image/card/leave.png" />
       <text>请假申请</text>
     </view>
 
-    <view class="analysis">
+    <view class="analysis" bind:tap="TapAnalysis">
       <image src="../../image/card/analysis.png" />
       <text>数据分析</text>
     </view>

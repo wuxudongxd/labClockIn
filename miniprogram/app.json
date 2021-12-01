@@ -2,6 +2,7 @@
   "pages": [
     "pages/guard/index",
     "pages/index/index",
+    "pages/clockin/index",
     "pages/leave/index",
     "pages/analysis/index"
   ],
