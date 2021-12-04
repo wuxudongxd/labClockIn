@@ -12,10 +12,7 @@ export interface lab {
 export interface userProps {
   nickName: string;
   avatarUrl: string;
-  lab?: {
-    _id: string;
-    name: string;
-  };
+  labId?: string;
   name?: string;
   studentID?: string;
 }

@@ -1,5 +1,10 @@
 import { GetDistance } from "../../utils/index";
-import { getLabs } from "../../utils/cloudbase";
+// import { getLabs } from "../../utils/cloudbase";
+
+const checkLocationAuth = async () => {
+  const setting = await wx.getSetting();
+  return setting.authSetting["scope.userLocation"];
+};
 
 Page({
   data: {
@@ -8,18 +13,25 @@ Page({
     labName: "",
     labLatitude: 0,
     labLongitude: 0,
+    labRange: 0,
     distance: 0,
-    disableButton: true,
+    locationAuth: false,
   },
   async onLoad() {
-    const res = await getLabs();
-    const labName = res.data[0].name;
-    const { latitude, longitude } = res.data[0].locations[0];
-    this.setData({
-      labName,
-      labLatitude: latitude,
-      labLongitude: longitude,
+    // const res = await getLabs();
+    const res = wx.cloud.callFunction({
+      name: "cloudbase",
+      data: { type: "getUserLab" },
     });
+    console.log(res);
+
+    // const labName = res.data[0].name;
+    // const { latitude, longitude } = res.data[0].locations[0];
+    // this.setData({
+    //   labName,
+    //   labLatitude: latitude,
+    //   labLongitude: longitude,
+    // });
   },
   async onShow() {
     const setting = await wx.getSetting();

@@ -1,14 +1,5 @@
-// 云函数入口文件
-const cloud = require("wx-server-sdk");
+const { cloud, db, command: _ } = require("../init");
 
-cloud.init({
-  env: "lab-clock-in-8g1unwf8651fda4d",
-});
-
-const db = cloud.database();
-const _ = db.command;
-
-// 云函数入口函数
 exports.main = async (event, context) => {
   const openid = cloud.getWXContext().OPENID;
   let AuthStatus = "unAuth";
@@ -16,10 +7,10 @@ exports.main = async (event, context) => {
     const result = await db
       .collection("user")
       .where({
-        _openid: _.eq(openid),
+        openid: _.eq(openid),
       })
       .field({
-        _openid: true,
+        _id: false,
         isAudit: true,
       })
       .get();

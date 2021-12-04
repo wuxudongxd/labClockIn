@@ -1,4 +1,3 @@
-import { addUser } from "../../utils/cloudbase";
 import { getLabs } from "../../utils/cloudbase";
 import { lab, userProps } from "../../types/index";
 
@@ -28,7 +27,10 @@ Page({
   // 检查用户云数据库状态
   async checkUserStatus() {
     try {
-      const res = await wx.cloud.callFunction({ name: "auth" });
+      const res = await wx.cloud.callFunction({
+        name: "cloudbase",
+        data: { type: "auth" },
+      });
       switch (res.result) {
         case "unAuth":
           console.log("用户未认证");
@@ -71,12 +73,15 @@ Page({
         avatarUrl: this.data.avatarUrl,
         name: formData.name,
         studentID: formData.studentID,
-        lab: { _id: selectedLab?._id, name: selectedLab?.name },
+        labId: selectedLab?._id,
       };
-      console.log(userProps);
 
-      const user = await addUser(userProps);
-      if (user.errMsg === "collection.add:ok") {
+      const response = await wx.cloud.callFunction({
+        name: "cloudbase",
+        data: { type: "addUser", userInfo: userProps },
+      });
+
+      if ((response.result as any).code === 0) {
         this.setData({
           userStatus: "unAudit",
         });
@@ -89,7 +94,6 @@ Page({
     const res = await getLabs();
     const labs = res.data as lab[];
     const labsName = labs.map((item: lab) => item.name);
-    console.log(labsName);
 
     this.setData({
       _labs: labs,
@@ -106,12 +110,13 @@ Page({
       const res = await wx.getUserProfile({
         desc: "获取信息用于验证",
       });
-      console.log(res);
       this.setData({
         nickName: res.userInfo.nickName,
         avatarUrl: res.userInfo.avatarUrl,
         hasUserInfo: true,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   },
 });
