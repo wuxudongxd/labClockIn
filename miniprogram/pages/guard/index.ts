@@ -61,9 +61,9 @@ Page({
   async onSubmit(event: WechatMiniprogram.FormSubmit) {
     try {
       const formData = event.detail.value as form;
-      const selectedLabIndex = this.data.labsName[formData.labIndex];
+      const selectedLabName = this.data.labsName[formData.labIndex];
       const selectedLab = this.data._labs.find(
-        (item) => item.name === selectedLabIndex
+        (item) => item.name === selectedLabName
       ) as lab;
 
       const userProps: userProps = {
