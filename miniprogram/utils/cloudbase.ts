@@ -1,28 +1,22 @@
-// 新增用户
-import { userProps } from "../types/index";
+import type { userProps } from "../types/index";
 
+const db = wx.cloud.database();
+
+// 新增用户
 export const addUser = async (userInfo: userProps) => {
   const { avatarUrl, nickName, lab, name, studentID } = userInfo;
-  const res = await wx.cloud
-    .database()
-    .collection("user")
-    .add({
-      data: {
-        lab,
-        name,
-        studentID,
-        avatarUrl,
-        nickName,
-        isAudit: false,
-        isDel: false,
-      },
-    });
-  console.log("add user", res);
-
-  return res;
+  return await db.collection("user").add({
+    data: {
+      lab,
+      name,
+      studentID,
+      avatarUrl,
+      nickName,
+      isAudit: false,
+      isDel: false,
+    },
+  });
 };
 
-export const getLabs = async () => {
-  const res = await wx.cloud.database().collection("lab").get();
-  return res;
-};
+// 查询所有实验室
+export const getLabs = async () => await db.collection("lab").get();
