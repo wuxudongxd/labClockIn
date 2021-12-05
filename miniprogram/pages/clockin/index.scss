@@ -7,6 +7,13 @@
   height: calc(100vh - 120rpx);
 }
 
+.loading {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .wrap {
   padding: 40rpx;
   .greet {

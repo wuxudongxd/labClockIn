@@ -1,5 +1,13 @@
 import { GetDistance } from "../../utils/index";
 
+const checkClockIn = async () => {
+  const res = await wx.cloud.callFunction({
+    name: "cloudbase",
+    data: { type: "checkClockIn" },
+  });
+  return res.result;
+};
+
 /**
  * 检查用户是否对位置进行授权
  */
@@ -22,16 +30,27 @@ Page({
     labLatitude: 0,
     labLongitude: 0,
     labRange: 0,
+
+    // 签到信息
+    clockInState: "",
+    clockInTime: "",
   },
   async onLoad() {
-    const locationAuth = await checkLocationAuth();
-    if (locationAuth) {
-      this.setData({
-        locationAuth,
-      });
+    const clockInState = (await checkClockIn()) as string;
+    if (clockInState === "unClockIn") {
+      // 检查位置权限
+      const locationAuth = await checkLocationAuth();
+      if (locationAuth) {
+        this.setData({
+          locationAuth,
+          clockInState,
+        });
+      }
+      // 获取实验室信息
+      this.getUserLab();
+    } else {
+      this.setData({ clockInState });
     }
-
-    this.getUserLab();
   },
   async onShow() {
     if (await checkLocationAuth()) {
@@ -131,10 +150,23 @@ Page({
   /**
    * 用户签到
    */
-  clockin() {
-    console.log("clockin");
-    // wx.cloud.database().collection("clock_in_record").add({
-    //   data: {},
-    // });
+  async clockin() {
+    try {
+      const res = await wx.cloud.callFunction({
+        name: "cloudbase",
+        data: {
+          type: "clockIn",
+          data: {
+            longitude: this.data.longitude,
+            latitude: this.data.latitude,
+          },
+        },
+      });
+      this.setData({
+        clockInState: (res.result as AnyObject).state,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   },
 });

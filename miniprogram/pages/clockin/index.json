@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "van-button": "@vant/weapp/button/index"
+    "van-loading": "@vant/weapp/loading/index"
   }
 }

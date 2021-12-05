@@ -1,6 +1,16 @@
 <image class="background-img" src="../../image/background.png"></image>
 
-<view class="wrap">
+<van-loading
+  wx:if="{{!clockInState}}"
+  class="loading"
+  color="#1989fa"
+  size="40px"
+  text-size="20px"
+  vertical
+  >加载中...</van-loading
+>
+
+<view wx:if="{{clockInState === 'unClockIn'}}" class="wrap">
   <text class="greet">{{labName}}</text>
   <view class="flex-wrap">
     <view class="flex-content">
@@ -33,3 +43,7 @@
     </view>
   </view>
 </view>
+
+<view wx:elif="{{clockInState === 'success'}}"></view>
+
+<view wx:elif="{{clockInState === 'prohibit'}}"></view>
