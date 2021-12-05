@@ -25,20 +25,21 @@
     .flex-content {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      min-height: 700rpx;
       .hint {
         display: block;
-        width: 570rpx;
+        width: 600rpx;
         color: #585857;
         font-size: 30rpx;
-        margin-bottom: 70rpx;
       }
       .card {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-top: 40rpx;
         width: 622rpx;
         height: 452rpx;
         background: linear-gradient(

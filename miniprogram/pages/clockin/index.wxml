@@ -1,12 +1,11 @@
 <image class="background-img" src="../../image/background.png"></image>
 
 <view class="wrap">
-  <text class="greet">{{labName}}:</text>
+  <text class="greet">{{labName}}</text>
   <view class="flex-wrap">
     <view class="flex-content">
-      <text class="hint">
-        签到系统基于地理位置定位实现，
-        为确保成功签到，我们需要获取您的当前位置。
+      <text class="hint" wx:if="{{!locationAuth}}">
+        签到系统基于地理位置定位实现， 为确保成功签到，我们需要获取您的当前位置
       </text>
 
       <view class="card">
@@ -14,19 +13,23 @@
           <text>您的当前位置为：</text>
           <text>经度：{{latitude}}</text>
           <text>纬度：{{longitude}}</text>
+          <text>距离 {{labName}} {{distance || '--'}} 米</text>
           <text
-            >距离{{labName}}<text>{{distance ? distance: ' -- '}}</text>米</text
+            >{{inRange ?
+            '在有效距离内，可以签到':'在有效距离外，不能签到'}}</text
           >
-          <text>{{'在有效距离外，不能签到'}}</text>
         </view>
       </view>
     </view>
 
     <view class="button">
-      <button class="btn" wx:if="{{disableButton}}" bind:tap="onTap">
+      <button class="btn" wx:if="{{!locationAuth}}" bind:tap="getLocationAuth">
         获取当前位置
       </button>
-      <button wx:else>签到</button>
+      <div wx:else>
+        <button class="btn" wx:if="{{inRange}}" bind:tap="clockin">签到</button>
+        <button class="btn" wx:else disabled="{{true}}">不可签到</button>
+      </div>
     </view>
   </view>
 </view>

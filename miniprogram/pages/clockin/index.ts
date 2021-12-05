@@ -1,6 +1,8 @@
 import { GetDistance } from "../../utils/index";
-// import { getLabs } from "../../utils/cloudbase";
 
+/**
+ * 检查用户是否对位置进行授权
+ */
 const checkLocationAuth = async () => {
   const setting = await wx.getSetting();
   return setting.authSetting["scope.userLocation"];
@@ -8,61 +10,89 @@ const checkLocationAuth = async () => {
 
 Page({
   data: {
+    // 用户信息
     latitude: 0,
     longitude: 0,
+    distance: 0,
+    locationAuth: false,
+    inRange: false,
+
+    // 实验室信息
     labName: "",
     labLatitude: 0,
     labLongitude: 0,
     labRange: 0,
-    distance: 0,
-    locationAuth: false,
   },
   async onLoad() {
-    // const res = await getLabs();
-    const res = wx.cloud.callFunction({
-      name: "cloudbase",
-      data: { type: "getUserLab" },
-    });
-    console.log(res);
+    const locationAuth = await checkLocationAuth();
+    if (locationAuth) {
+      this.setData({
+        locationAuth,
+      });
+    }
 
-    // const labName = res.data[0].name;
-    // const { latitude, longitude } = res.data[0].locations[0];
-    // this.setData({
-    //   labName,
-    //   labLatitude: latitude,
-    //   labLongitude: longitude,
-    // });
+    this.getUserLab();
   },
   async onShow() {
-    const setting = await wx.getSetting();
-    if (setting.authSetting["scope.userLocation"]) {
+    if (await checkLocationAuth()) {
       await wx.startLocationUpdate();
-      wx.onLocationChange(this._locationChangeFn);
+      wx.onLocationChange(this.handleLocationChange);
     }
   },
   async onHide() {
-    const setting = await wx.getSetting();
-    if (setting.authSetting["scope.userLocation"]) {
-      wx.offLocationChange(this._locationChangeFn);
+    if (await checkLocationAuth()) {
+      wx.offLocationChange(this.handleLocationChange);
     }
   },
-  async onTap() {
+  /**
+   * 请求用户位置权限
+   */
+  async getLocationAuth() {
     try {
-      const setting = await wx.getSetting();
-      if (!setting.authSetting["scope.userLocation"]) {
+      const locationAuth = await checkLocationAuth();
+      // 用户之前未进行授权
+      if (locationAuth === undefined) {
         await wx.authorize({ scope: "scope.userLocation" });
         await wx.startLocationUpdate();
-        wx.onLocationChange(this._locationChangeFn);
+        wx.onLocationChange(this.handleLocationChange);
+        this.setData({
+          locationAuth: true,
+        });
       }
-      wx.cloud.database().collection("clock_in_record").add({
-        data: {},
-      });
+      // 用户之前已拒绝授权
+      else if (locationAuth === false) {
+        wx.showModal({
+          content: "检测到您没打开此小程序的位置权限，是否去设置打开？",
+          confirmText: "确认",
+          cancelText: "取消",
+          success: (res) => {
+            //点击“确认”时打开设置页面
+            if (res.confirm) {
+              wx.openSetting({
+                success: async () => {
+                  await wx.startLocationUpdate();
+                  wx.onLocationChange(this.handleLocationChange);
+                  this.setData({
+                    locationAuth: true,
+                  });
+                },
+              });
+            } else {
+              console.log("用户点击取消");
+            }
+          },
+        });
+      }
     } catch (error) {
       console.error(error);
     }
   },
-  _locationChangeFn(res: any) {
+  /**
+   * 用户地理位置改变handle函数
+   */
+  handleLocationChange(res: any) {
     let distance = 0;
+    let inRange = false;
     if (this.data.labLatitude !== 0 && this.data.labLongitude !== 0) {
       distance = GetDistance(
         this.data.labLatitude,
@@ -70,11 +100,41 @@ Page({
         res.latitude,
         res.longitude
       );
+      inRange = distance < this.data.labRange;
     }
     this.setData({
       latitude: res.latitude.toFixed(9),
       longitude: res.longitude.toFixed(9),
       distance,
+      inRange,
     });
+  },
+  /**
+   * 获取用户所在实验室信息
+   */
+  async getUserLab() {
+    const res = await wx.cloud.callFunction({
+      name: "cloudbase",
+      data: { type: "getUserLab" },
+    });
+
+    const labName = (res.result as AnyObject)?.name;
+    const { latitude, longitude } = (res.result as AnyObject)?.locations[0];
+    const range = (res.result as AnyObject)?.range;
+    this.setData({
+      labName,
+      labLatitude: latitude,
+      labLongitude: longitude,
+      labRange: range,
+    });
+  },
+  /**
+   * 用户签到
+   */
+  clockin() {
+    console.log("clockin");
+    // wx.cloud.database().collection("clock_in_record").add({
+    //   data: {},
+    // });
   },
 });

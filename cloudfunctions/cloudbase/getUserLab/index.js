@@ -26,5 +26,6 @@ exports.main = async (event, context) => {
       _openid: 0,
     })
     .end();
-  return res;
+
+  return res.list[0];
 };
