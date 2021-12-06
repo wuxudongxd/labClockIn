@@ -1,10 +1,5 @@
 const { cloud, db, command: _, aggregate: $ } = require("../init");
-
-const formatDate = (date) => {
-  let formatted_date =
-    date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-  return formatted_date;
-};
+const { dateFormat } = require("../utils");
 
 // 检查用户打卡状态
 exports.main = async (event, context) => {
@@ -17,13 +12,21 @@ exports.main = async (event, context) => {
     .orderBy("recordTime", "desc")
     .get();
 
-  const nowFormat = formatDate(new Date());
+  const nowFormat = dateFormat(new Date(), "yyyy-MM-dd");
   const records = res.data;
   if (records.length > 0) {
     const record = records[0];
-    const recordTimeFormat = formatDate(new Date(record.recordTime));
-    if (nowFormat === recordTimeFormat) return "success";
+    const recordTimeFormat = dateFormat(
+      new Date(record.recordTime),
+      "yyyy-MM-dd"
+    );
+    if (nowFormat === recordTimeFormat) {
+      const recordTime = dateFormat(
+        new Date(record.recordTime),
+        "yyyy年MM月dd日 hh:mm:ss"
+      );
+      return { message: "success", data: { recordTime } };
+    }
   }
-
-  return "unClockIn";
+  return { message: "unClockIn" };
 };

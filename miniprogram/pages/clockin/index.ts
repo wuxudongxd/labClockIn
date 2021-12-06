@@ -1,13 +1,5 @@
 import { GetDistance } from "../../utils/index";
 
-const checkClockIn = async () => {
-  const res = await wx.cloud.callFunction({
-    name: "cloudbase",
-    data: { type: "checkClockIn" },
-  });
-  return res.result;
-};
-
 /**
  * 检查用户是否对位置进行授权
  */
@@ -36,20 +28,33 @@ Page({
     clockInTime: "",
   },
   async onLoad() {
-    const clockInState = (await checkClockIn()) as string;
-    if (clockInState === "unClockIn") {
+    const response = await wx.cloud.callFunction({
+      name: "cloudbase",
+      data: { type: "checkClockIn" },
+    });
+    const result = response.result as AnyObject;
+    console.log(result);
+
+    if (result.message === "unClockIn") {
       // 检查位置权限
       const locationAuth = await checkLocationAuth();
       if (locationAuth) {
         this.setData({
           locationAuth,
-          clockInState,
+          clockInState: result.message,
         });
       }
       // 获取实验室信息
       this.getUserLab();
+    } else if (result.message === "success") {
+      this.setData({
+        clockInState: result.message,
+        clockInTime: result.data.recordTime,
+      });
     } else {
-      this.setData({ clockInState });
+      this.setData({
+        clockInState: result.message,
+      });
     }
   },
   async onShow() {
@@ -152,7 +157,7 @@ Page({
    */
   async clockin() {
     try {
-      const res = await wx.cloud.callFunction({
+      const response = await wx.cloud.callFunction({
         name: "cloudbase",
         data: {
           type: "clockIn",
@@ -162,8 +167,11 @@ Page({
           },
         },
       });
+      const result = response.result as AnyObject;
+
       this.setData({
-        clockInState: res.result as string,
+        clockInState: result.message,
+        clockInTime: result.data.recordTime,
       });
     } catch (error) {
       console.error(error);
