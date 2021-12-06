@@ -44,6 +44,19 @@
   </view>
 </view>
 
-<view wx:elif="{{clockInState === 'success'}}">success</view>
+<view wx:elif="{{clockInState === 'success'}}" class="success">
+  <text class="greet">{{labName}}</text>
+  <view class="content">
+    <image class="icon" src="../../image/clockIn/success.png" />
+    <text class="label">签到成功</text>
+    <text class="record-time">{{clockInTime}}</text>
+  </view>
+</view>
 
-<view wx:elif="{{clockInState === 'prohibit'}}">prohibit</view>
+<view wx:elif="{{clockInState === 'prohibit'}}" class="prohibit">
+  <text class="greet">{{labName}}</text>
+  <view class="content">
+    <image class="icon" src="../../image/clockIn/warning.png" />
+    <text class="label">您已请假，无法签到</text>
+  </view>
+</view>

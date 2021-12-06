@@ -28,24 +28,22 @@ Page({
     clockInTime: "",
   },
   async onLoad() {
+    // 获取实验室信息
+    this.getUserLab();
+
     const response = await wx.cloud.callFunction({
       name: "cloudbase",
       data: { type: "checkClockIn" },
     });
     const result = response.result as AnyObject;
-    console.log(result);
 
     if (result.message === "unClockIn") {
       // 检查位置权限
       const locationAuth = await checkLocationAuth();
-      if (locationAuth) {
-        this.setData({
-          locationAuth,
-          clockInState: result.message,
-        });
-      }
-      // 获取实验室信息
-      this.getUserLab();
+      this.setData({
+        clockInState: result.message,
+        locationAuth: !!locationAuth, // locationAuth 可能为false或undefined，这里取布尔值
+      });
     } else if (result.message === "success") {
       this.setData({
         clockInState: result.message,
