@@ -14,14 +14,16 @@ exports.main = async (event, context) => {
     .where({
       userOpenId: _.eq(openid),
     })
+    .orderBy("recordTime", "desc")
     .get();
 
-  const now = new Date();
-  const nowFormat = formatDate(now);
+  const nowFormat = formatDate(new Date());
   const records = res.data;
-  for (const record of records) {
+  if (records.length > 0) {
+    const record = records[0];
     const recordTimeFormat = formatDate(new Date(record.recordTime));
     if (nowFormat === recordTimeFormat) return "success";
   }
+
   return "unClockIn";
 };
