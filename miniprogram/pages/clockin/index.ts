@@ -163,7 +163,7 @@ Page({
         },
       });
       this.setData({
-        clockInState: (res.result as AnyObject).state,
+        clockInState: res.result as string,
       });
     } catch (error) {
       console.error(error);

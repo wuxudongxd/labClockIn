@@ -44,6 +44,6 @@
   </view>
 </view>
 
-<view wx:elif="{{clockInState === 'success'}}"></view>
+<view wx:elif="{{clockInState === 'success'}}">success</view>
 
-<view wx:elif="{{clockInState === 'prohibit'}}"></view>
+<view wx:elif="{{clockInState === 'prohibit'}}">prohibit</view>

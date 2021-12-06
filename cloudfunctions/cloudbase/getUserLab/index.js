@@ -22,7 +22,6 @@ exports.main = async (event, context) => {
       newRoot: "$lab",
     })
     .project({
-      _id: 0,
       _openid: 0,
     })
     .end();
