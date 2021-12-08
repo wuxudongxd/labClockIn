@@ -21,8 +21,7 @@
     "types": ["@types/wechat-miniprogram"],
     "paths": {
       "@vant/weapp/*": ["./node_modules/@vant/weapp/dist/*"]
-    },
-    "typeRoots": ["./typings"]
+    }
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
