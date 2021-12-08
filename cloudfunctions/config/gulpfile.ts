@@ -3,6 +3,7 @@ import path from "path";
 import { OutputOptions, rollup } from "rollup";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import typescript from "@rollup/plugin-typescript";
 import clear from "rollup-plugin-clear";
 import copy from "rollup-plugin-copy";
 
@@ -16,7 +17,7 @@ const compile = async () => {
     const output = `${outDir}/${item}`;
 
     const inputOption = {
-      input: `${input}/index.ts`,
+      input: `${input}/test1.ts`,
       plugins: [
         // 清空目标目录
         clear({
@@ -35,6 +36,7 @@ const compile = async () => {
           resolveOnly: [""],
         }),
         commonjs(),
+        typescript(),
       ],
       external: ["wx-server-sdk"],
     };

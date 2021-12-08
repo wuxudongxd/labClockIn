@@ -1,21 +1,20 @@
-import cloud from "wx-server-sdk";
+import auth from "./auth";
+import addUser from "./addUser/index";
+import getUserLab from "./getUserLab/index";
+import clockIn from "./clockIn/index";
+import checkClockIn from "./checkClockIn/index";
 
-cloud.init({
-  env: "lab-clock-in-8g1unwf8651fda4d",
-});
-
-const db = cloud.database();
-const command = db.command;
-const aggregate = db.command.aggregate;
-
-export async function main(event, context) {
-  const wxContext = cloud.getWXContext();
-
-  return {
-    event,
-    openid: wxContext.OPENID,
-    appid: wxContext.APPID,
-    unionid: wxContext.UNIONID,
-    env: wxContext.ENV,
-  };
+export async function main(event: any, context: any) {
+  switch (event.type) {
+    case "auth":
+      return await auth(event, context);
+    case "addUser":
+      return await addUser(event, context);
+    case "getUserLab":
+      return await getUserLab(event, context);
+    case "clockIn":
+      return await clockIn(event, context);
+    case "checkClockIn":
+      return await checkClockIn(event, context);
+  }
 }
