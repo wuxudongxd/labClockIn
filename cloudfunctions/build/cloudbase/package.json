@@ -1,0 +1,12 @@
+{
+  "name": "cloudbase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "wuxudongxd",
+  "license": "MIT",
+  "dependencies": {
+    "wx-server-sdk": "^2.5.3"
+  }
+}
