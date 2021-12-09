@@ -2,7 +2,7 @@ import { cloud, db, command as _ } from "../init";
 import { generateResponse } from "../utils";
 
 // 添加用户
-const addUser = async (event: any, context: any) => {
+const addUser = async (event: any, _context: any) => {
   try {
     const openid = cloud.getWXContext().OPENID;
     const { avatarUrl, nickName, labId, name, studentID } = event.userInfo;

@@ -1,9 +1,9 @@
-import { cloud, db, command as _, aggregate as $ } from "../init";
+import { cloud, db, command as _ } from "../init";
 import { dateFormat } from "../utils";
 import { generateResponse } from "../utils";
 
 // 检查用户打卡状态
-const checkClockIn = async (event: any, context: any) => {
+const checkClockIn = async (_event: any, _context: any) => {
   const openid = cloud.getWXContext().OPENID;
   const res = (await db
     .collection("clock_in_record")

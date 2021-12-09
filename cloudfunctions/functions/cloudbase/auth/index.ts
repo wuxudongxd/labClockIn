@@ -1,7 +1,7 @@
 import { cloud, db, command as _ } from "../init";
 import { generateResponse } from "../utils";
 
-const auth = async (event: any, context: any) => {
+const auth = async (_event: any, _context: any) => {
   const openid = cloud.getWXContext().OPENID;
   let AuthStatus = "unAuth";
   try {

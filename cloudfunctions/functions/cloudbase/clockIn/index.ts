@@ -1,4 +1,4 @@
-import { cloud, db, command as _, aggregate as $ } from "../init";
+import { cloud, db, command as _ } from "../init";
 import { dateFormat, generateResponse } from "../utils";
 import getUserLab from "../getUserLab/index";
 import checkClockIn from "../checkClockIn/index";
