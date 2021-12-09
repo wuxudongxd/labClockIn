@@ -16,7 +16,7 @@ const dateFormat = function (date: Date, fmt: string): string {
     "s+": date.getSeconds(), //秒
     "q+": Math.floor((date.getMonth() + 3) / 3), //季度
     S: date.getMilliseconds(), //毫秒
-  };
+  } as any;
   if (/(y+)/.test(fmt))
     fmt = fmt.replace(
       RegExp.$1,
@@ -31,7 +31,8 @@ const dateFormat = function (date: Date, fmt: string): string {
   return fmt;
 };
 
-// var time1 = Format(new Date(), "yyyy-MM-dd");
-// var time2 = Format(new Date(), "yyyy-MM-dd HH:mm:ss");
+const generateResponse = (message: string, data?: any) => {
+  return { message, data: data ?? {} };
+};
 
-export { dateFormat };
+export { dateFormat, generateResponse };

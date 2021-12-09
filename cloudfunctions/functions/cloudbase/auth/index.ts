@@ -1,4 +1,5 @@
 import { cloud, db, command as _ } from "../init";
+import { generateResponse } from "../utils";
 
 const auth = async (event: any, context: any) => {
   const openid = cloud.getWXContext().OPENID;
@@ -26,7 +27,7 @@ const auth = async (event: any, context: any) => {
     console.error(error);
   }
 
-  return AuthStatus;
+  return generateResponse(AuthStatus);
 };
 
 export default auth;

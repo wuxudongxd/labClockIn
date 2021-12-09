@@ -1,5 +1,6 @@
 import { cloud, db, command as _, aggregate as $ } from "../init";
 import { dateFormat } from "../utils";
+import { generateResponse } from "../utils";
 
 // 检查用户打卡状态
 const checkClockIn = async (event: any, context: any) => {
@@ -25,10 +26,10 @@ const checkClockIn = async (event: any, context: any) => {
         new Date(record.recordTime),
         "yyyy年MM月dd日 hh:mm:ss"
       );
-      return { message: "success", data: { recordTime } };
+      return generateResponse("success", recordTime);
     }
   }
-  return { message: "unClockIn" };
+  return generateResponse("unClockIn");
 };
 
 export default checkClockIn;

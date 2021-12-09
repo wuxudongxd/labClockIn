@@ -1,4 +1,5 @@
-import { cloud, db, command as _, aggregate as $ } from "../init";
+import { cloud, db, command as _ } from "../init";
+import { generateResponse } from "../utils";
 
 // 聚合查询用户所在的实验室信息
 const getUserLab = async (event: any, context: any) => {
@@ -26,7 +27,7 @@ const getUserLab = async (event: any, context: any) => {
     })
     .end()) as cloud.DB.IAggregateResult;
 
-  return res.list[0];
+  return generateResponse("success", res.list[0]);
 };
 
 export default getUserLab;

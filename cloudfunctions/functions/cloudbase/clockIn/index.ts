@@ -1,14 +1,14 @@
 import { cloud, db, command as _, aggregate as $ } from "../init";
+import { dateFormat, generateResponse } from "../utils";
 import getUserLab from "../getUserLab/index";
 import checkClockIn from "../checkClockIn/index";
-import { dateFormat } from "../utils";
 
 // 完成打卡，数据入库
 const _clockIn = async (event: any, context: any) => {
   const openid = cloud.getWXContext().OPENID;
   const { longitude, latitude } = event.data;
-  const res = await getUserLab(event, context);
-  const labId = res._id;
+  const result = await getUserLab(event, context);
+  const labId = result.data._id;
   const now = new Date();
   const timestamp = now.getTime();
   const formatDate = dateFormat(now, "yyyy年MM月dd日 hh:mm:ss");
@@ -22,21 +22,20 @@ const _clockIn = async (event: any, context: any) => {
       latitude,
     },
   });
-  return { message: "success", data: { recordTime: formatDate } };
+  return generateResponse("success", { recordTime: formatDate });
 };
 
 // 用户打卡
 const clockIn = async (event: any, context: any) => {
-  const res = await checkClockIn(event, context);
-  if (res.message !== "unClockIn") {
-    return res;
-  } else {
+  const result = await checkClockIn(event, context);
+  if (result.message === "unClockIn") {
     try {
       return await _clockIn(event, context);
     } catch (error) {
-      return { message: "fail" };
+      return generateResponse("failed");
     }
   }
+  return result;
 };
 
 export default clockIn;

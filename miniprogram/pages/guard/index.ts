@@ -1,5 +1,5 @@
 import { getLabs } from "../../utils/cloudbase";
-import { lab, userProps } from "../../types/index";
+import { lab, resultObj, userProps } from "../../../types/index";
 
 interface form {
   labIndex: number;
@@ -27,11 +27,12 @@ Page({
   // 检查用户云数据库状态
   async checkUserStatus() {
     try {
-      const res = await wx.cloud.callFunction({
+      const response = await wx.cloud.callFunction({
         name: "cloudbase",
         data: { type: "auth" },
       });
-      switch (res.result) {
+      const { message } = response.result as resultObj;
+      switch (message) {
         case "unAuth":
           console.log("用户未认证");
           this.setData({
@@ -80,8 +81,9 @@ Page({
         name: "cloudbase",
         data: { type: "addUser", userInfo: userProps },
       });
+      const { message } = response.result as resultObj;
 
-      if ((response.result as any).code === 0) {
+      if (message === "success") {
         this.setData({
           userStatus: "unAudit",
         });

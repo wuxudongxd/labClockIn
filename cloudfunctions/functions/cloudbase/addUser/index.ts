@@ -1,4 +1,5 @@
 import { cloud, db, command as _ } from "../init";
+import { generateResponse } from "../utils";
 
 // 添加用户
 const addUser = async (event: any, context: any) => {
@@ -23,9 +24,9 @@ const addUser = async (event: any, context: any) => {
         joinTime: new Date().getTime(),
       },
     });
-    return { code: 0, status: "success" };
+    return generateResponse("success");
   } catch (error) {
-    return { code: 1, status: "error", message: error };
+    return generateResponse("error", error);
   }
 };
 
