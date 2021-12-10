@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { cloud, db, command as _ } from "../init";
 import { generateResponse } from "../utils";
 
@@ -21,7 +22,7 @@ const addUser = async (event: any, _context: any) => {
       data: {
         userOpenId: openid,
         labId,
-        joinTime: new Date().getTime(),
+        joinTime: dayjs().valueOf(),
       },
     });
     return generateResponse("success");

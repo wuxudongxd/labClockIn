@@ -5,6 +5,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import sucrase from "@rollup/plugin-sucrase";
 import copy from "rollup-plugin-copy";
+import { watch } from "gulp";
 
 const entryDir = "../functions";
 const outDir = "../build";
@@ -52,5 +53,7 @@ const compile = async () => {
   });
   return Promise.all(builds);
 };
+
+watch(entryDir, compile);
 
 export default compile;
