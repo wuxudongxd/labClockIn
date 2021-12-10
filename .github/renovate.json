@@ -1,0 +1,4 @@
+{
+  "extends": ["config:base"],
+  "npmrc": "registry=https://registry.npmmirror.com/"
+}
