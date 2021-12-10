@@ -16,14 +16,14 @@
     }
   },
   "dependencies": {
-    "@vant/weapp": "^1.9.2"
+    "@vant/weapp": "1.9.2"
   },
   "devDependencies": {
-    "@types/wechat-miniprogram": "^3.4.0",
-    "commitizen": "^4.2.4",
-    "conventional-changelog-cli": "^2.1.1",
-    "husky": "^7.0.0",
-    "lint-staged": "^11.2.6",
-    "prettier": "^2.4.1"
+    "@types/wechat-miniprogram": "3.4.0",
+    "commitizen": "4.2.4",
+    "conventional-changelog-cli": "2.1.1",
+    "husky": "7.0.4",
+    "lint-staged": "11.2.6",
+    "prettier": "2.4.1"
   }
 }
