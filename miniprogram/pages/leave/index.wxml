@@ -1,2 +1,74 @@
-<!--pages/leave/index.wxml-->
-<text>pages/leave/index.wxml</text>
+<van-loading
+  wx:if="{{!leaveState}}"
+  class="loading"
+  color="#1989fa"
+  size="40px"
+  text-size="20px"
+  vertical
+  >加载中...</van-loading
+>
+
+<view wx:if="{{leaveState === 'none'}}" class="wrap">
+  <view class="form">
+    <view class="type">
+      <view class="label">请假类型<text style="color: red">*</text></view>
+      <picker bindchange="PickerChange" value="{{index}}" range="{{types}}">
+        <view class="picker {{index ? 'active':''}}">
+          <text>{{index?types[index]:'请选择'}}</text>
+          <image class="arrow" src="../../image/arrow.png" />
+        </view>
+      </picker>
+    </view>
+    <view class="time">
+      <view class="start">
+        <view class="label">开始时间<text style="color: red">*</text></view>
+        <view class="picker" bind:tap="displayStartTime">
+          <text>{{startTime || "请选择"}}</text>
+          <image class="arrow" src="../../image/arrow.png" />
+        </view>
+        <van-calendar
+          class="calendar"
+          show="{{ show === 'start' }}"
+          color="#8bb7af"
+          bind:close="onClose"
+          bind:confirm="selectStartTime" />
+      </view>
+      <view class="end">
+        <view class="label">结束时间<text style="color: red">*</text></view>
+        <view class="picker" bind:tap="displayEndTime">
+          <text>{{endTime || "请选择"}}</text>
+          <image class="arrow" src="../../image/arrow.png" />
+        </view>
+        <van-calendar
+          class="calendar"
+          show="{{ show === 'end' }}"
+          color="#8bb7af"
+          bind:close="onClose"
+          bind:confirm="selectEndTime" />
+      </view>
+    </view>
+    <view class="reason">
+      <view class="label">请假事由<text style="color: red">*</text></view>
+      <textarea class="reason-content" bindinput="onTextAreaInput" />
+    </view>
+  </view>
+
+  <button class="btn" bind:tap="onSubmit">提交</button>
+</view>
+
+<view wx:elif="{{leaveState === 'success'}}" class="success">
+  <text class="greet">{{labName}}</text>
+  <view class="content">
+    <image class="icon" src="../../image/clockIn/success.png" />
+    <text class="label">签到成功</text>
+    <text class="record-time">{{clockInTime}}</text>
+  </view>
+</view>
+
+<view wx:elif="{{leaveState === 'prohibit'}}" class="prohibit">
+  <text class="greet">{{labName}}</text>
+  <view class="content">
+    <image class="icon" src="../../image/clockIn/warning.png" />
+    <text class="label">您已请假，无法签到</text>
+  </view>
+</view>

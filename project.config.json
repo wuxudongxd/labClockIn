@@ -4,7 +4,7 @@
     "ignore": []
   },
   "miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot": "cloudfunctions/build",
+  "cloudfunctionRoot": "cloudfunctions/build/",
   "compileType": "miniprogram",
   "libVersion": "2.21.0",
   "projectname": "labClockIn",
