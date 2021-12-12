@@ -3,6 +3,8 @@ import addUser from "./addUser/index";
 import getUserLab from "./getUserLab/index";
 import clockIn from "./clockIn/index";
 import checkClockIn from "./checkClockIn/index";
+import askForLeave from "./askForLeave/index";
+import checkAskForLeave from "./checkAskForLeave/index";
 
 export async function main(event: any, context: any) {
   switch (event.type) {
@@ -16,5 +18,9 @@ export async function main(event: any, context: any) {
       return await clockIn(event, context);
     case "checkClockIn":
       return await checkClockIn(event, context);
+    case "askForLeave":
+      return await askForLeave(event, context);
+    case "checkAskForLeave":
+      return await checkAskForLeave(event, context);
   }
 }
