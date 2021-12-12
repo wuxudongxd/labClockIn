@@ -1,3 +1,5 @@
+import { resultObj } from "types";
+
 const formDate = (date: Date) => {
   return `${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`;
 };
@@ -8,7 +10,7 @@ Page({
   },
   data: {
     // 状态控制
-    leaveState: "none",
+    leaveState: "",
     show: "",
 
     // 辅助变量
@@ -21,6 +23,16 @@ Page({
     endTime: "",
     _endTimeStamp: 0,
     _reason: "",
+  },
+  async onLoad() {
+    const response = await wx.cloud.callFunction({
+      name: "cloudbase",
+      data: { type: "checkAskForLeave" },
+    });
+    const { message } = response.result as resultObj;
+    this.setData({
+      leaveState: message,
+    });
   },
   displayStartTime() {
     this.setData({ show: "start" });
@@ -60,8 +72,23 @@ Page({
   onTextAreaInput(e: any) {
     this.setData({ _reason: e.detail.value });
   },
-  onSubmit() {
+  async onSubmit() {
     const { _leaveType, _startTimeStamp, _endTimeStamp, _reason } = this.data;
-    console.log(_leaveType, _startTimeStamp, _endTimeStamp, _reason);
+    const response = await wx.cloud.callFunction({
+      name: "cloudbase",
+      data: {
+        type: "askForLeave",
+        data: {
+          leaveType: _leaveType,
+          startTimeStamp: _startTimeStamp,
+          endTimeStamp: _endTimeStamp,
+          reason: _reason,
+        },
+      },
+    });
+    const result = response.result as resultObj;
+    this.setData({
+      leaveState: result.message,
+    });
   },
 });

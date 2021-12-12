@@ -57,18 +57,17 @@
 </view>
 
 <view wx:elif="{{leaveState === 'success'}}" class="success">
-  <text class="greet">{{labName}}</text>
   <view class="content">
-    <image class="icon" src="../../image/clockIn/success.png" />
-    <text class="label">签到成功</text>
-    <text class="record-time">{{clockInTime}}</text>
+    <image class="icon" src="../../image/leave/success.png" />
+    <text class="label">您的请假申请已通过</text>
   </view>
+  <button class="btn">完成</button>
 </view>
 
-<view wx:elif="{{leaveState === 'prohibit'}}" class="prohibit">
-  <text class="greet">{{labName}}</text>
+<view wx:elif="{{leaveState === 'audit'}}" class="prohibit">
   <view class="content">
-    <image class="icon" src="../../image/clockIn/warning.png" />
-    <text class="label">您已请假，无法签到</text>
+    <image class="icon" src="../../image/leave/warning.png" />
+    <text class="label">您的申请已发送，请等待审核通过</text>
   </view>
+  <button class="btn">完成</button>
 </view>

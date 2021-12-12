@@ -71,8 +71,37 @@
   }
 }
 
-.success {
+.success,
+.prohibit {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  .content {
+    width: 100%;
+    height: 400rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -200rpx;
+    .icon {
+      width: 240rpx;
+      height: 240rpx;
+      margin-bottom: 80rpx;
+    }
+    .label {
+      color: #585857;
+      font-size: 40rpx;
+    }
+  }
+  .btn {
+    width: 350rpx;
+  }
 }
 
-.prohibit {
+.success::before,
+.prohibit::before {
+  content: "";
 }
