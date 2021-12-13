@@ -1,2 +1,46 @@
-<!--pages/analysis/index.wxml-->
-<text>pages/analysis/index.wxml</text>
+<view class="wrap">
+  <view class="summary">
+    <view class="month">
+      <text class="text">11月汇总</text>
+      <view class="arrow"></view>
+    </view>
+    <view class="data">
+      <view class="clockin-record">
+        <text class="record">0</text>
+        <text class="type">签到(次)</text>
+      </view>
+      <view class="leave-record">
+        <text class="record">0</text>
+        <text class="type">请假(次)</text>
+      </view>
+    </view>
+  </view>
+  <view class="calendar-wrap">
+    <view class="calendar">
+      <van-calendar
+        poppable="{{ false }}"
+        min-date="{{ minDate }}"
+        max-date="{{ maxDate }}"
+        color="#8bb7af"
+        show-title="{{false}}"
+        show-confirm="{{false}}"
+        show-mark="{{false}}"
+        row-height="{{48}}"
+        formatter="{{ formatter }}"
+        bind:close="onClose"
+        bind:confirm="onConfirm"
+        bind:select="select" />
+    </view>
+    <van-divider
+      contentPosition="center"
+      customStyle="color: #1989fa; font-size: 18px;"
+      ><text class="divider-arrow"></text
+    ></van-divider>
+    <view class="detail">
+      <view class="clock-in-time">
+        <view class="icon"></view>
+        <text class="time">签到 16：20</text>
+      </view>
+    </view>
+  </view>
+</view>
