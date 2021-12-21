@@ -1,6 +1,6 @@
 <view class="wrap">
   <view class="summary">
-    <view class="month">
+    <view class="month" bind:tap="navigateToDetail">
       <text class="text">11月汇总</text>
       <view class="arrow"></view>
     </view>

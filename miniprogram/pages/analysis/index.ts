@@ -30,4 +30,11 @@ Page({
   select(value: any) {
     console.log(value);
   },
+  navigateToDetail() {
+    console.log("navigateToDetail");
+
+    wx.navigateTo({
+      url: "/pages/analysis/detail/index",
+    });
+  },
 });

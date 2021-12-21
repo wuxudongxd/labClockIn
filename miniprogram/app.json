@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/guard/index",
-    "pages/index/index",
+    "pages/home/index",
     "pages/clockin/index",
     "pages/leave/index",
-    "pages/analysis/index"
+    "pages/analysis/index",
+    "pages/analysis/detail/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

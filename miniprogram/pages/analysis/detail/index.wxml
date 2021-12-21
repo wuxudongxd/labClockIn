@@ -1,0 +1,8 @@
+<view class="charts">
+  <canvas
+    canvas-id="afMCYQMEmXXVAjNQFJvvfxbLSHuxNEOL"
+    id="afMCYQMEmXXVAjNQFJvvfxbLSHuxNEOL"
+    type="2d"
+    class="charts"
+    bindtouchend="tap" />
+</view>
