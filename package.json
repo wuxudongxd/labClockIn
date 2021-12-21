@@ -16,7 +16,7 @@
     }
   },
   "dependencies": {
-    "@vant/weapp": "1.9.2"
+    "@vant/weapp": "1.10.0"
   },
   "devDependencies": {
     "@types/wechat-miniprogram": "3.4.0",
