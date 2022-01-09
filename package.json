@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/wechat-miniprogram": "3.4.0",
     "commitizen": "4.2.4",
-    "conventional-changelog-cli": "2.1.1",
+    "conventional-changelog-cli": "2.2.2",
     "husky": "7.0.4",
     "lint-staged": "12.1.7",
     "prettier": "2.5.1"
