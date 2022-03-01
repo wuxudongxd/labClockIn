@@ -49,7 +49,7 @@ Page({
         case "Auth":
           console.log("用户审核通过");
           wx.redirectTo({
-            url: "/pages/index/index",
+            url: "/pages/home/index",
           });
           break;
         default:
