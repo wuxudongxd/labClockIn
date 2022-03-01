@@ -13,3 +13,35 @@ TODO:
 请假表单
 请假状态信息
 用户信息分析
+
+
+
+## 页面 UI 设计
+
+认证页面：
+
+![](docs/img/认证.png)
+
+
+
+首页：
+
+<img src="docs/img/首页.png" style="zoom:50%;" />
+
+
+
+签到页面：
+
+![](docs/img/签到.png)
+
+
+
+请假页面：
+
+![](docs/img/请假.png)
+
+
+
+数据分析：
+
+![image-20220301220427760](docs/img/数据分析.png)
