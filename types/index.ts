@@ -16,9 +16,3 @@ export interface userProps {
   name?: string;
   studentID?: string;
 }
-
-// 云函数响应格式
-export interface resultObj extends AnyObject {
-  message: string;
-  data: AnyObject;
-}

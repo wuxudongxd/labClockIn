@@ -1,5 +1,6 @@
 import { getLabs } from "../../utils/cloudbase";
-import { lab, resultObj, userProps } from "../../../types/index";
+import { lab, userProps } from "../../../types/index";
+import fetch from "../../utils/fetch";
 
 interface form {
   labIndex: number;
@@ -27,12 +28,9 @@ Page({
   // 检查用户云数据库状态
   async checkUserStatus() {
     try {
-      const response = await wx.cloud.callFunction({
-        name: "cloudbase",
-        data: { type: "auth" },
-      });
-      const { message } = response.result as resultObj;
-      switch (message) {
+      const { AuthStatus } = await fetch<{ AuthStatus: AuthStatus }>("auth");
+      console.log("AuthStatus", AuthStatus);
+      switch (AuthStatus) {
         case "unAuth":
           console.log("用户未认证");
           this.setData({
@@ -77,13 +75,10 @@ Page({
         labId: selectedLab?._id,
       };
 
-      const response = await wx.cloud.callFunction({
-        name: "cloudbase",
-        data: { type: "addUser", userInfo: userProps },
+      const { message } = await fetch("addUser", {
+        userInfo: userProps,
       });
-      const { message } = response.result as resultObj;
-
-      if (message === "success") {
+      if (message === "ok") {
         this.setData({
           userStatus: "unAudit",
         });

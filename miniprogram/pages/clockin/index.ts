@@ -1,5 +1,5 @@
+import fetch from "../../utils/fetch";
 import { GetDistance } from "../../utils/index";
-import type { resultObj } from "types/index";
 
 /**
  * 检查用户是否对位置进行授权
@@ -32,30 +32,26 @@ Page({
     // 获取实验室信息
     this.getUserLab();
 
-    const response = await wx.cloud.callFunction({
-      name: "cloudbase",
-      data: { type: "checkClockIn" },
-    });
-    const {
-      message,
-      data: { recordTime },
-    } = response.result as resultObj;
+    const { state, recordTime } = await fetch<{
+      state: clockInState;
+      recordTime?: string;
+    }>("checkClockIn");
 
-    if (message === "unClockIn") {
+    if (state === "unClockIn") {
       // 检查位置权限
       const locationAuth = await checkLocationAuth();
       this.setData({
-        clockInState: message,
+        clockInState: state,
         locationAuth: !!locationAuth, // locationAuth 可能为false或undefined，这里取布尔值
       });
-    } else if (message === "success") {
+    } else if (state === "success") {
       this.setData({
-        clockInState: message,
+        clockInState: state,
         clockInTime: recordTime,
       });
     } else {
       this.setData({
-        clockInState: message,
+        clockInState: state,
       });
     }
   },
@@ -139,12 +135,7 @@ Page({
    * 获取用户所在实验室信息
    */
   async getUserLab() {
-    const response = await wx.cloud.callFunction({
-      name: "cloudbase",
-      data: { type: "getUserLab" },
-    });
-    const result = response.result as resultObj;
-    const { name, range, locations } = result.data;
+    const { name, range, locations } = await fetch<any>("getUserLab");
     const { latitude, longitude } = locations[0];
     this.setData({
       labName: name,
@@ -158,22 +149,17 @@ Page({
    */
   async clockin() {
     try {
-      const response = await wx.cloud.callFunction({
-        name: "cloudbase",
+      const { state, recordTime } = await fetch<{
+        state: clockInState;
+        recordTime?: string;
+      }>("clockIn", {
         data: {
-          type: "clockIn",
-          data: {
-            longitude: this.data.longitude,
-            latitude: this.data.latitude,
-          },
+          longitude: this.data.longitude,
+          latitude: this.data.latitude,
         },
       });
-      const {
-        message,
-        data: { recordTime },
-      } = response.result as resultObj;
       this.setData({
-        clockInState: message,
+        clockInState: state,
         clockInTime: recordTime,
       });
     } catch (error) {

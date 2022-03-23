@@ -1,4 +1,4 @@
-import { resultObj } from "types";
+import fetch from "../../utils/fetch";
 
 const formDate = (date: Date) => {
   return `${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`;
@@ -25,13 +25,11 @@ Page({
     _reason: "",
   },
   async onLoad() {
-    const response = await wx.cloud.callFunction({
-      name: "cloudbase",
-      data: { type: "checkAskForLeave" },
-    });
-    const { message } = response.result as resultObj;
+    const { state } = await fetch<{ state: askForLeaveState }>(
+      "checkAskForLeave"
+    );
     this.setData({
-      leaveState: message,
+      leaveState: state,
     });
   },
   displayStartTime() {
@@ -74,21 +72,16 @@ Page({
   },
   async onSubmit() {
     const { _leaveType, _startTimeStamp, _endTimeStamp, _reason } = this.data;
-    const response = await wx.cloud.callFunction({
-      name: "cloudbase",
-      data: {
-        type: "askForLeave",
-        data: {
-          leaveType: _leaveType,
-          startTimeStamp: _startTimeStamp,
-          endTimeStamp: _endTimeStamp,
-          reason: _reason,
-        },
+    const { state } = await fetch<{ state: "audit" }>("askForLeave", {
+      information: {
+        leaveType: _leaveType,
+        startTimeStamp: _startTimeStamp,
+        endTimeStamp: _endTimeStamp,
+        reason: _reason,
       },
     });
-    const result = response.result as resultObj;
     this.setData({
-      leaveState: result.message,
+      leaveState: state,
     });
   },
 });
