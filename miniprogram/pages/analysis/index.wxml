@@ -6,11 +6,11 @@
     </view>
     <view class="data">
       <view class="clockin-record">
-        <text class="record">0</text>
+        <text class="record">{{clickInRecord.length}}</text>
         <text class="type">签到(次)</text>
       </view>
       <view class="leave-record">
-        <text class="record">0</text>
+        <text class="record">{{leaveRecord.length}}</text>
         <text class="type">请假(次)</text>
       </view>
     </view>
