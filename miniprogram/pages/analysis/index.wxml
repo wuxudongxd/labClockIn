@@ -6,11 +6,11 @@
     </view>
     <view class="data">
       <view class="clockin-record">
-        <text class="record">{{clickInRecord.length}}</text>
+        <text class="record">{{clockInRecord.count}}</text>
         <text class="type">签到(次)</text>
       </view>
       <view class="leave-record">
-        <text class="record">{{leaveRecord.length}}</text>
+        <text class="record">{{leaveRecord.count}}</text>
         <text class="type">请假(次)</text>
       </view>
     </view>
@@ -18,17 +18,18 @@
   <view class="calendar-wrap">
     <view class="calendar">
       <van-calendar
-        poppable="{{ false }}"
-        min-date="{{ minDate }}"
-        max-date="{{ maxDate }}"
+        type="single"
         color="#8bb7af"
+        poppable="{{ false }}"
         show-title="{{false}}"
         show-confirm="{{false}}"
         show-mark="{{false}}"
         row-height="{{48}}"
+        default-date="{{defaultDate}}"
+        min-date="{{ minDate }}"
+        max-date="{{ maxDate }}"
         formatter="{{ formatter }}"
         bind:close="onClose"
-        bind:confirm="onConfirm"
         bind:select="select" />
     </view>
     <van-divider
@@ -39,8 +40,13 @@
     <view class="detail">
       <view class="clock-in-time">
         <view class="icon"></view>
-        <text class="time">签到 16：20</text>
+        <text class="time">{{clockInTime}}</text>
       </view>
+      <view wx-if="{{clockInDay}}" class="clock-in-location">
+        <text class="">经度：{{latitude}}</text>
+        <text class="">纬度：{{longitude}}</text>
+      </view>
+        
     </view>
   </view>
 </view>

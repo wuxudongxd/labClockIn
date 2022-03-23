@@ -4,7 +4,7 @@ import { cloud, db, command as _ } from "../init";
 const analysis = async (
   _event: any,
   _context: any
-): Promise<cloudResponse<any>> => {
+): Promise<cloudResponse<analysisResponse>> => {
   const openid = cloud.getWXContext().OPENID;
   const now = dayjs();
   const curMonthTimeStamp = now.startOf("month").valueOf();
@@ -44,7 +44,30 @@ const analysis = async (
       )
       .get()) as cloud.DB.IQueryResult;
 
-    return { clockInResult, leaveResult };
+    // console.log("clockInResult", clockInResult.data);
+    // console.log("leaveResult", leaveResult.data);
+    const clockInDays: clockInDays = [];
+    for (const item of clockInResult.data) {
+      const date = dayjs(item.recordTimeStamp);
+      const day = date.date();
+      const time = date.format("HH:mm");
+      const latitude = item.latitude;
+      const longitude = item.longitude;
+      clockInDays[day] = { time, latitude, longitude };
+    }
+
+    const analysisResponse: analysisResponse = {
+      clockInRecord: {
+        count: clockInResult.data.length,
+        days: clockInDays,
+      },
+      leaveRecord: {
+        count: leaveResult.data.length,
+      },
+    };
+    console.log("analysisResponse", analysisResponse);
+
+    return analysisResponse;
   } catch (error) {
     return { error: error as Error };
   }

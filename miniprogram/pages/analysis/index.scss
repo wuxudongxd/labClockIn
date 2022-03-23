@@ -58,7 +58,7 @@
     overflow: hidden;
     margin-bottom: 40rpx;
     .calendar {
-      height: 740rpx;
+      height: 650rpx;
     }
     .divider-arrow {
       width: 20rpx;
@@ -83,6 +83,16 @@
         .time {
           margin-left: 25rpx;
           color: #585857;
+        }
+      }
+      .clock-in-location {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30rpx;
+        margin-left: 70rpx;
+        color: #585857;
+        text {
+          margin-top: 10rpx;
         }
       }
     }
