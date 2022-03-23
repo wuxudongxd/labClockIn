@@ -5,6 +5,7 @@ import clockIn from "./clockIn/index";
 import checkClockIn from "./checkClockIn/index";
 import askForLeave from "./askForLeave/index";
 import checkAskForLeave from "./checkAskForLeave/index";
+import analysis from "./analysis";
 
 export async function main(event: any, context: any) {
   switch (event.type) {
@@ -22,5 +23,8 @@ export async function main(event: any, context: any) {
       return await askForLeave(event, context);
     case "checkAskForLeave":
       return await checkAskForLeave(event, context);
+    case "analysis":
+      return await analysis(event, context);
   }
+  // return uiil.generateResponse("ok", {});
 }
