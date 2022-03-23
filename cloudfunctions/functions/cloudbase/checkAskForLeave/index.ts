@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import { cloud, db, command as _ } from "../init";
-import { generateResponse } from "../utils";
 
-const checkAskForLeave = async (_event: any, _context: any) => {
+const checkAskForLeave = async (
+  _event: any,
+  _context: any
+): Promise<cloudResponse<{ state: askForLeaveState }>> => {
   try {
     const openid = cloud.getWXContext().OPENID;
     const now = dayjs().valueOf();
@@ -14,22 +16,22 @@ const checkAskForLeave = async (_event: any, _context: any) => {
       .orderBy("recordTimeStamp", "desc")
       .get()) as cloud.DB.IQueryResult;
 
-    let message = "none";
+    let state: askForLeaveState = "none";
     const records = res.data;
     if (
       records.length > 0 &&
       records[0].startTimeStamp < now &&
       records[0].endTimeStamp > now
     ) {
-      message = "audit";
+      state = "audit";
       if (records[0].isAudit) {
-        message = "success";
+        state = "success";
       }
     }
 
-    return generateResponse(message);
+    return { state };
   } catch (error) {
-    return generateResponse("error", error);
+    return { error: error as Error };
   }
 };
 

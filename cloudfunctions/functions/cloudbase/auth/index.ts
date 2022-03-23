@@ -1,9 +1,11 @@
 import { cloud, db, command as _ } from "../init";
-import { generateResponse } from "../utils";
 
-const auth = async (_event: any, _context: any) => {
+const auth = async (
+  _event: any,
+  _context: any
+): Promise<cloudResponse<{ AuthStatus: AuthStatus }>> => {
   const openid = cloud.getWXContext().OPENID;
-  let AuthStatus = "unAuth";
+  let AuthStatus: AuthStatus = "unAuth";
   try {
     const result = (await db
       .collection("user")
@@ -24,10 +26,9 @@ const auth = async (_event: any, _context: any) => {
       }
     }
   } catch (error) {
-    console.error(error);
+    return { error: error as Error };
   }
-
-  return generateResponse(AuthStatus);
+  return { AuthStatus };
 };
 
 export default auth;

@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
 import { cloud, db, command as _ } from "../init";
-import { generateResponse } from "../utils";
 
 // 添加用户
-const addUser = async (event: any, _context: any) => {
+const addUser = async (
+  event: any,
+  _context: any
+): Promise<cloudResponse<{ state: "ok" }>> => {
   try {
     const openid = cloud.getWXContext().OPENID;
     const { avatarUrl, nickName, labId, name, studentID } = event.userInfo;
@@ -25,9 +27,9 @@ const addUser = async (event: any, _context: any) => {
         joinTime: dayjs().valueOf(),
       },
     });
-    return generateResponse("success");
+    return { state: "ok" };
   } catch (error) {
-    return generateResponse("error", error);
+    return { error: error as Error };
   }
 };
 

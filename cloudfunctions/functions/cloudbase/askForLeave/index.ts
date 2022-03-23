@@ -1,11 +1,14 @@
 import dayjs from "dayjs";
 import { cloud, db, command as _ } from "../init";
-import { generateResponse } from "../utils";
 
-const askForLeave = async (event: any, _context: any) => {
+const askForLeave = async (
+  event: any,
+  _context: any
+): Promise<cloudResponse<{ state: "audit" }>> => {
   try {
     const openid = cloud.getWXContext().OPENID;
-    const { leaveType, startTimeStamp, endTimeStamp, reason } = event.data;
+    const { leaveType, startTimeStamp, endTimeStamp, reason } =
+      event.information;
     const recordTimeStamp = dayjs().valueOf();
     await db.collection("ask_for_leave_record").add({
       data: {
@@ -18,9 +21,9 @@ const askForLeave = async (event: any, _context: any) => {
         isAudit: false,
       },
     });
-    return generateResponse("audit");
+    return { state: "audit" };
   } catch (error) {
-    return generateResponse("error", error);
+    return { error: error as Error };
   }
 };
 
