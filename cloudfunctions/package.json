@@ -10,7 +10,7 @@
     "compile": "gulp -f ./config/gulpfile.ts"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "21.0.2",
+    "@rollup/plugin-commonjs": "22.0.2",
     "@rollup/plugin-node-resolve": "13.1.1",
     "@rollup/plugin-sucrase": "4.0.1",
     "@types/gulp": "4.0.9",
