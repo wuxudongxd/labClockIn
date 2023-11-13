@@ -13,7 +13,7 @@
     "@rollup/plugin-commonjs": "21.0.2",
     "@rollup/plugin-node-resolve": "13.1.1",
     "@rollup/plugin-sucrase": "4.0.1",
-    "@types/gulp": "4.0.9",
+    "@types/gulp": "4.0.17",
     "gulp": "4.0.2",
     "rollup": "2.70.1",
     "rollup-plugin-copy": "3.4.0",
