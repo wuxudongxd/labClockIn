@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "21.0.2",
-    "@rollup/plugin-node-resolve": "13.1.1",
+    "@rollup/plugin-node-resolve": "13.3.0",
     "@rollup/plugin-sucrase": "4.0.1",
     "@types/gulp": "4.0.9",
     "gulp": "4.0.2",
